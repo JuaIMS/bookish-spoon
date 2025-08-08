@@ -95,46 +95,46 @@ void loop() {
         }
     }
 
-    // Cycle through icon combinations every 0.5 seconds
-    if (millis() - icon_last_millis > 500) {
-        icon_last_millis = millis();
+    // // Cycle through icon combinations every 0.5 seconds
+    // if (millis() - icon_last_millis > 500) {
+    //     icon_last_millis = millis();
 
-        // Cycle through 7 different icon combinations
-        static uint8_t combination_index = 0;
-        combination_index++;
-        if (combination_index > 6)
-            combination_index = 0;
+    //     // Cycle through 7 different icon combinations
+    //     static uint8_t combination_index = 0;
+    //     combination_index++;
+    //     if (combination_index > 6)
+    //         combination_index = 0;
 
-        switch (combination_index) {
-            case 0:
-                icon_display_state = ICON_NONE;
-                break;
-            case 1:
-                icon_display_state = ICON_ARROW_LEFT;
-                break;
-            case 2:
-                icon_display_state = ICON_BLUETOOTH;
-                break;
-            case 3:
-                icon_display_state = ICON_HEADLAMP;
-                break;
-            case 4:
-                icon_display_state = ICON_ARROW_RIGHT;
-                break;
-            case 5:
-                icon_display_state = ICON_ARROW_LEFT | ICON_BLUETOOTH; // Combo 1
-                break;
-            case 6:
-                icon_display_state = ICON_HEADLAMP | ICON_ARROW_RIGHT; // Combo 2
-                break;
-        }
-    }
+    //     switch (combination_index) {
+    //         case 0:
+    //             icon_display_state = ICON_NONE;
+    //             break;
+    //         case 1:
+    //             icon_display_state = ICON_ARROW_LEFT;
+    //             break;
+    //         case 2:
+    //             icon_display_state = ICON_BLUETOOTH;
+    //             break;
+    //         case 3:
+    //             icon_display_state = ICON_HEADLAMP;
+    //             break;
+    //         case 4:
+    //             icon_display_state = ICON_ARROW_RIGHT;
+    //             break;
+    //         case 5:
+    //             icon_display_state = ICON_ARROW_LEFT | ICON_BLUETOOTH; // Combo 1
+    //             break;
+    //         case 6:
+    //             icon_display_state = ICON_HEADLAMP | ICON_ARROW_RIGHT; // Combo 2
+    //             break;
+    //     }
+    // }
 
     // Extract each digit from the counter value
-    uint8_t dig3 = (counter % 10);         // Ones place
-    uint8_t dig2 = (counter / 10) % 10;    // Tens place
-    uint8_t dig1 = (counter / 100) % 10;   // Hundreds place
-    uint8_t dig0 = (counter / 1000) % 10;  // Thousands place
+    uint8_t ones = (counter % 10);         // Ones place
+    uint8_t tens = (counter / 10) % 10;    // Tens place
+    uint8_t hundreds = (counter / 100) % 10;   // Hundreds place
+    uint8_t thousands = (counter / 1000) % 10;  // Thousands place
 
     // Turn off all cathodes before updating the display to prevent ghosting
     for (int i = 0; i < NUM_CATHODES; i++) {
@@ -145,17 +145,17 @@ void loop() {
     switch (digit_to_be_displayed) {
         case 0:
             // Display ones digit
-            writeSegments(seven_segment_lookup[dig3]);
+            writeSegments(seven_segment_lookup[ones]);
             digitalWrite(M, HIGH); // Enable cathode for digit 0 (rightmost)
             break;
         case 1:
             // Display tens digit
-            writeSegments(seven_segment_lookup[dig2]);
+            writeSegments(seven_segment_lookup[tens]);
             digitalWrite(L, HIGH); // Enable cathode for digit 1
             break;
         case 2:
             // Display hundreds digit
-            writeSegments(seven_segment_lookup[dig1]);
+            writeSegments(seven_segment_lookup[hundreds]);
             digitalWrite(K, HIGH); // Enable cathode for digit 2
             break;
         case 3: {
@@ -163,7 +163,7 @@ void loop() {
             byte display_pattern = icon_display_state; // Start with icon pattern
 
             // If the thousands digit is '1', add its segments to the icon pattern
-            if (dig0 == 1) {
+            if (thousands == 1) {
                 display_pattern |= ICON_ONE;
             }
             writeSegments(display_pattern);
