@@ -10,12 +10,12 @@
 #define G 8   // Segment G
 
 // Pin definitions for the digit select lines (cathodes)
-#define H 9    // Digit 0 (rightmost)
+#define H 9    // Digit 0 
 #define I 10   // Digit 1
 #define J 11   // Digit 2
-#define K 12   // Digit 3 (leftmost)
-#define L 13   // Digit 4 (not used in this code)
-#define M A0   // Digit 5 (not used in this code)
+#define K 12   // Digit 3 
+#define L 13   // Digit 4 
+#define M A0   // Digit 5 
 
 #define NUM_ANODES 7      // Number of segment pins
 #define NUM_CATHODES 6    // Number of digit select pins
